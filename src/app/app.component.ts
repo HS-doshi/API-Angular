@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { MessageService } from './services/message.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { PostComponent } from './post/post.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule, CommonModule],
+  imports: [RouterOutlet, HttpClientModule, CommonModule, PostComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers : [MessageService]
