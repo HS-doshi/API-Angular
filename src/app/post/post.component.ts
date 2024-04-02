@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-post',
@@ -12,17 +12,35 @@ import { FormsModule } from '@angular/forms';
 })
 export class PostComponent implements OnInit {
 
-  http=inject(HttpClient)
+  private postService = inject(PostService)
   posts : any =[]
 
   // ngoninit is lifecycle hook.
   ngOnInit(): void {
-      this.fetchPosts()
+      this.loadPosts()
   }
-  fetchPosts(){
-    this.http.get('https://jsonplaceholder.typicode.com/posts')
-    .subscribe((posts:any)=>{
-      this.posts = posts
+  // fetchPosts(){
+  //   this.postService.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
+  //   .subscribe((posts:any)=>{
+  //     this.posts = posts
+  //   })
+  // }
+  // loadPosts(){
+  //   this.postService.getPosts().subscribe((posts:any)=>{
+  //     console.log(posts)
+  //     this.posts = posts
+  //   });
+  // }
+
+  loadPosts(){
+    this.postService.getPosts().subscribe({
+      next:(posts  :any) =>{
+        this.posts = posts;
+        console.log('Post fetched',posts)
+      },
+      error:(error)=>{
+        console.log('Error fetching posts',error)
+      }
     })
   }
 }
